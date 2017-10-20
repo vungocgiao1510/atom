@@ -9,7 +9,7 @@ class Muser extends CI_Model{
         $this->db->where('password',$p);
         $query = $this->db->get($this->_table);
         if($query->num_rows() > 0){
-            return true;
+            return $query->row_array();
         } else {
             return false;
         }

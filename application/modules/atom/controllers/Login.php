@@ -9,17 +9,17 @@ class Login extends LoginController{
         if($this->input->post('ok')){
             $u = ($this->input->post('username')) ? $this->input->post("username") : '';
             $p = ($this->input->post('password')) ? $this->input->post("password") : '';
-            if($u && $p){
-                $check_login = array(
-                    "username" => $u,
-                    "password" => $p
+            $data = $this->Muser->checkLogin($u,$p);
+            if($data != false){
+                $ses_user = array(
+                    'id' => $data['id'],
+                    'username' => $data['username'],
+                    'email' => $data['email'],
+                    'level' => $data['level'],
+                    'created' => $data['created'],
+                    'updated' => $date['updated'],
+                    'lang' => 1,
                 );
-                $data = $this->Muser->checkLogin($u,$p);
-                if($data == TRUE){
-                    redirect(base_url().'gcms/dashboard/index');
-                } else {
-                    $this->_data['error'] = 'Tài khoản hoặc mật khẩu không đúng.';
-                }
             }
         }
         $this->load->view($this->_data['filename'], $this->_data);
